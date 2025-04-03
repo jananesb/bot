@@ -1,0 +1,18 @@
+-- PDFs table to store information about uploaded documents
+CREATE TABLE pdfs (
+    id TEXT PRIMARY KEY,         -- UUID of the PDF
+    filename TEXT,               -- Original filename
+    hash TEXT,                   -- MD5 hash for duplicate detection
+    upload_date TIMESTAMP,       -- When the PDF was uploaded
+    vector_store_path TEXT       -- Path to stored vector embeddings
+);
+
+-- Queries table to store question and answer history
+CREATE TABLE queries (
+    id TEXT PRIMARY KEY,         -- UUID of the query
+    pdf_id TEXT,                 -- Foreign key to pdfs table
+    query TEXT,                  -- User's question
+    response TEXT,               -- AI response
+    timestamp TIMESTAMP,         -- When the query was made
+    FOREIGN KEY (pdf_id) REFERENCES pdfs (id)
+);
